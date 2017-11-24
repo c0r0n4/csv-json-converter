@@ -14,8 +14,14 @@ converter().fromFile(read, (error, result) => {
         console.log(`Error occured: ${error.message}`)
     } else {
         // writing the data into the file stated and notifying the status of process
-        fs.writeFileSync(path.join(__dirname, file), result)
-        console.log('Done converting');
+        fs.writeFile(file, JSON.stringify(result, null, 2), (error) => {
+            if(error) {
+                return process.exit(1);
+            } else {
+                console.log('Done converting');
+                process.exit(0);
+            }
+        })
     }
     // there should be a statement to notify if converting is not successful, but I do not know how to build it. I am still new
 })
